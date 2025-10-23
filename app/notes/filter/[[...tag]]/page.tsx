@@ -2,23 +2,23 @@ import { fetchNotes } from "@/lib/api";
 import NotesClient from "@/app/notes/Notes.client";
 
 interface FilteredNotesPageProps {
+  // ⚡ В Next.js 15 params может быть Promise
   params: Promise<{ tag?: string[] }>;
 }
 
 export default async function FilteredNotesPage({
   params,
 }: FilteredNotesPageProps) {
-  const { tag } = await params;
+  // ✅ Достаём params асинхронно (чтобы не было ошибки “params is a Promise”)
+  const resolvedParams = await params;
+  const tag = resolvedParams.tag?.[0];
 
-  // Берём тег из URL
-  const selectedTag = tag?.[0];
+  // ✅ Если "all" — тег не передаём, иначе фильтруем по тегу
+  const queryTag = tag === "all" ? undefined : tag;
 
-  // Если "all" — убираем фильтр
-  const queryTag =
-    selectedTag && selectedTag !== "all" ? selectedTag : undefined;
+  // ✅ Запрашиваем заметки с фильтром
+  const data = await fetchNotes({ q: queryTag });
 
-  // ✅ Передаём "tag", не "q"
-  const data = await fetchNotes(queryTag ? { tag: queryTag } : {});
-
+  // ✅ Передаём их в клиентский компонент
   return <NotesClient initialNotes={data.notes} />;
 }
