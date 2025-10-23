@@ -15,7 +15,6 @@ export default function NotesClient({ initialNotes }: NotesClientProps) {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["notes", page],
-    // ✅ Используем q вместо tag
     queryFn: () => fetchNotes({ page, q: "" }),
     initialData: { notes: initialNotes, totalPages: 1 },
     refetchOnMount: false,

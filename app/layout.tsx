@@ -25,7 +25,7 @@ export default function RootLayout({
           <Footer />
         </TanStackProvider>
 
-        {/* 👇 Модальное окно рендерится здесь, поверх всего */}
+        {}
         {modal}
       </body>
     </html>

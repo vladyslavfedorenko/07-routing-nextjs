@@ -14,12 +14,12 @@ export default function NotesLayout({
 }) {
   return (
     <div className={css.layout}>
-      {/* Сайдбар */}
+      {}
       <aside className={css.sidebar}>
         <SidebarNotes />
       </aside>
 
-      {/* Основной контент */}
+      {}
       <section className={css.main}>{children}</section>
     </div>
   );

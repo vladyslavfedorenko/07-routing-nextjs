@@ -13,7 +13,7 @@ export default function NotePreview({ note }: NotePreviewProps) {
   const router = useRouter();
 
   const handleClose = () => {
-    router.back(); // возвращаемся на предыдущий маршрут
+    router.back();
   };
 
   return (
