@@ -1,27 +1,31 @@
+import { fetchNotes } from "@/lib/api";
+import NotesClient from "../Notes.client";
 import {
   QueryClient,
   dehydrate,
   HydrationBoundary,
 } from "@tanstack/react-query";
-import { fetchNoteById } from "@/lib/api";
-import NoteDetailsClient from "./NoteDetails.client";
 
-interface PageProps {
-  params: Promise<{ id: string }>;
-}
-
-export default async function NoteDetailsPage({ params }: PageProps) {
-  const { id } = await params; // ✅ теперь правильно
-
+/**
+ * Главная страница списка заметок (/notes)
+ * Выполняет SSR-загрузку заметок и передаёт их в клиентский компонент
+ */
+export default async function NotesPage() {
   const queryClient = new QueryClient();
+
+  // 🔹 Получаем список заметок на первой странице
+  const data = await fetchNotes({ page: 1 });
+
+  // 🔹 Префетчим их в React Query кэш
   await queryClient.prefetchQuery({
-    queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
+    queryKey: ["notes", 1],
+    queryFn: () => fetchNotes({ page: 1 }),
   });
 
+  // 🔹 Возвращаем клиентский компонент с начальными заметками
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient id={id} />
+      <NotesClient initialNotes={data.notes} />
     </HydrationBoundary>
   );
 }
