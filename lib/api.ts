@@ -1,36 +1,30 @@
 import axios from "axios";
 import { Note } from "@/types/note";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const TOKEN = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-const BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://notehub-public.goit.study/api";
 
 export interface NotesResponse {
   notes: Note[];
   totalPages: number;
 }
 
-// ✅ Создаем axios-инстанс с правильным baseURL
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL, // ✅ не "/api", а абсолютный адрес
 });
 
 /**
- * ✅ Получение списка заметок с поддержкой фильтрации по тегу, поиску и пагинации
+ * Получение списка заметок
  */
 export const fetchNotes = async ({
   page = 1,
-  q,
-  tag,
+  q = "",
 }: {
   page?: number;
   q?: string;
-  tag?: string;
-} = {}): Promise<NotesResponse> => {
+}): Promise<NotesResponse> => {
   const params: Record<string, string | number> = { page };
-
   if (q && q.trim() !== "") params.q = q.trim();
-  if (tag && tag.trim() !== "") params.tag = tag.trim();
 
   const res = await api.get<NotesResponse>("/notes", {
     headers: { Authorization: `Bearer ${TOKEN}` },
@@ -41,22 +35,17 @@ export const fetchNotes = async ({
 };
 
 /**
- * ✅ Получение одной заметки по id
+ * Получение одной заметки
  */
 export const fetchNoteById = async (id: string): Promise<Note> => {
-  console.log("🟡 [fetchNoteById] Запрашиваем заметку с ID:", id); // <-- вот этот лог
-
   const res = await api.get<Note>(`/notes/${id}`, {
     headers: { Authorization: `Bearer ${TOKEN}` },
   });
-
-  console.log("🟢 [fetchNoteById] Успешно получили заметку:", res.data?.title); // <-- лог успешного ответа
-
   return res.data;
 };
 
 /**
- * ✅ Создание новой заметки
+ * Создание новой заметки
  */
 export const createNote = async (
   note: Pick<Note, "title" | "content" | "tag">
@@ -68,7 +57,7 @@ export const createNote = async (
 };
 
 /**
- * ✅ Удаление заметки
+ * Удаление заметки
  */
 export const deleteNote = async (id: string): Promise<void> => {
   await api.delete(`/notes/${id}`, {
