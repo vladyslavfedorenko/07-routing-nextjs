@@ -1,5 +1,6 @@
 import { fetchNotes } from "@/lib/api";
-import NotesClient from "@/app/notes/Notes.client";
+import NotesClient from "../[...slug]/Notes.client";
+
 
 interface FilteredNotesPageProps {
   // ⚡ В Next.js 15 params может быть Promise
