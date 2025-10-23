@@ -9,10 +9,8 @@ export const metadata: Metadata = {
 
 export default function NotesLayout({
   children,
-  modal, // 👈 слот для модалки (перехоплення)
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode; // 👈 типизируем слот
 }) {
   return (
     <div className={css.layout}>
@@ -23,9 +21,6 @@ export default function NotesLayout({
 
       {/* Основной контент */}
       <section className={css.main}>{children}</section>
-
-      {/* 👇 Здесь будет рендериться модальное окно при переходе /notes/[id] */}
-      {modal}
     </div>
   );
 }
