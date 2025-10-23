@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Modal from "@/components/Modal/Modal";
 import { Note } from "@/types/note";
-import styles from "./NotePreview.module.css";
+import styles from "@/components/NotePreview/NotePreview.module.css";
 
 interface NotePreviewProps {
   note: Note;

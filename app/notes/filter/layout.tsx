@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import css from "./LayoutNotes.module.css";
-import SidebarNotes from "./filter/@sidebar/SidebarNotes";
+import SidebarNotes from "./@sidebar/SidebarNotes";
 
 export const metadata: Metadata = {
   title: "Notes | NoteHub",
