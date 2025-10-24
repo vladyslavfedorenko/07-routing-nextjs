@@ -1,25 +1,27 @@
-import NotePreview from "@/app/@modal/(.)notes/[id]/NotePreview.client";
+import { QueryClient } from "@tanstack/react-query";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
+import NotePreview from "./NotePreview.client";
 
-interface NoteModalProps {
-  params: Promise<{ id: string }>;
+function getQueryClient() {
+  return new QueryClient();
 }
-export default async function NoteModalPage({ params }: NoteModalProps) {
-  const { id } = await params;
 
-  if (!id) {
-    console.error("❌ Нет ID заметки");
-    return <p>Note ID is missing</p>;
-  }
-  console.log("🟡 [NoteModalPage] Загружаем заметку с ID:", id);
-  let note;
-  try {
-    note = await fetchNoteById(id);
-  } catch (error) {
-    console.error("❌ Ошибка при получении заметки:", error);
+export default async function NoteModalPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const queryClient = getQueryClient();
 
-    return <p>Note not found</p>;
-  }
+  await queryClient.prefetchQuery({
+    queryKey: ["note", params.id],
+    queryFn: () => fetchNoteById(params.id),
+  });
 
-  return <NotePreview note={note} />;
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <NotePreview id={params.id} />
+    </HydrationBoundary>
+  );
 }

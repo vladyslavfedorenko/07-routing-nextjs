@@ -23,10 +23,8 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          {modal} {/* ✅ перемещено внутрь TanStackProvider */}
         </TanStackProvider>
-
-        {}
-        {modal}
       </body>
     </html>
   );
