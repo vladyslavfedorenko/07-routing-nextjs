@@ -1,13 +1,13 @@
 "use client";
 
-import NoteList from "@/components/NotesList/NoteList";
+import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import Error from "@/components/Error/Error";
 import useModalControl from "@/hooks/useModalControl";
-import { fetchNotes } from "@/lib/api/notes";
+import { fetchNotes } from "@/lib/api";
 
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useState, useEffect } from "react";

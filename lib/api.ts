@@ -1,4 +1,4 @@
-import { api } from "./axiosInstance";
+import axios from "axios";
 import type { Note } from "@/types/note";
 
 interface FetchNotesParams {
@@ -11,6 +11,15 @@ export interface FetchNotesResponse {
   notes: Note[];
   totalPages: number;
 }
+
+const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+
+export const api = axios.create({
+  baseURL: "https://notehub-public.goit.study/api",
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
 
 export async function fetchNotes(params: FetchNotesParams) {
   const response = await api.get<FetchNotesResponse>("/notes", { params });

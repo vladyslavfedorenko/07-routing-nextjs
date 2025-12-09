@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useId } from "react";
 import * as Yup from "yup";
 import css from "./NoteForm.module.css";
-import { createNote } from "@/lib/api/notes";
+import { createNote } from "@/lib/api";
 import Error from "@/components/Error/Error";
 
 interface NoteFormProps {
