@@ -1,6 +1,6 @@
 "use client";
 
-import NoteList from "@/components/NotesList/NotesList";
+import NoteList from "@/components/NotesList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Modal from "@/components/Modal/Modal";
