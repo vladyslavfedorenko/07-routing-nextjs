@@ -41,6 +41,6 @@ export async function createNote(data: {
 }
 
 export async function deleteNote(id: string) {
-  const response = await api.delete(`/notes/${id}`);
+  const response = await api.delete<Note>(`/notes/${id}`);
   return response.data;
 }

@@ -30,3 +30,4 @@ export default async function Notes({ params }: PropsFilter) {
     </HydrationBoundary>
   );
 }
+console.log("TOKEN =", process.env.NEXT_PUBLIC_NOTEHUB_TOKEN);
